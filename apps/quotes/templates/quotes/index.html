@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>A Web Page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            form{
+                margin: 50px;
+                width: 300px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            h2{
+                margin-bottom: 20px;
+            }
+            p{
+                margin-top: 20px;
+                margin-bottom: 0px;
+            }
+            .messages{
+                color: red;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="reg" action="/register" method="POST">
+            {% csrf_token %}
+            <h2>Registration</h2>
+            <p>First Name</p>
+            <input type="text" name="reg-fname">
+            <p>Last Name</p>
+            <input type="text" name="reg-lname">
+            <p>Email</p>
+            <input type="text" name="reg-email">
+            <p>Password</p>
+            <input type="password" name="reg-pword">
+            <p>Confirm PW</p>
+            <input type="password" name="reg-confpw">
+            <p><input type="submit" value="Register"></p>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </form>
+        <form id="log" action="/login" method="POST">
+            {% csrf_token %}
+            <h2>Login</h2>
+            <p>Email</p>
+            <input type="text" name="log-email">
+            <p>Password</p>
+            <input type="password" name="log-pword">
+            <p><input type="submit" value="Log In"></p>
+        </form>
+    </body>
+</html>

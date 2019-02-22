@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Account</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            body{
+                padding: 25px;
+            }
+            #header{
+                padding-left: 500px;
+            }
+            #header button{
+                margin-left: 15px;
+            }
+            #header button a, a:hover{
+                color: black;
+                text-decoration: none;
+            }
+            p{
+                margin-top: 20px;
+                margin-bottom: 0px;
+            }
+            .messages{
+                color: red;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <a href="/quotes">Back</a>
+            <button><a href="/logout">Logout</a></button>
+        </div>
+        <form action='/users/update' method='post'>
+            {% csrf_token %}
+            <h4>Edit My Account Info</h4>
+            <p>First Name</p>
+            <input type="text" name="fname" value="{{ thisUser.first_name }}">
+            <p>Last Name</p>
+            <input type="text" name="lname" value="{{ thisUser.last_name }}">
+            <p>Email</p>
+            <input type="text" name="email" value="{{ thisUser.email }}">
+            <br>
+            <br>
+            <input type="submit" value="Update">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </form>
+    </body>
+</html>

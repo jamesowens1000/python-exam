@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quote Dashboard</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wall/wall.css' %}">
+        <script>
+            var initVal = "";
+            $(document).ready(function(){
+                $("#msgBtn").attr("disabled", "true");
+                $("#msgText").keyup(function(){
+                    if ($(this).val() != initVal) {
+                        $("#msgBtn").removeAttr("disabled");
+                    } else {
+                        $("#msgBtn").attr("disabled", "true");
+                    }
+                });
+            });
+            $(document).ready(function(){
+                $(".cmntBtn").attr("disabled", "true");
+                $(".cmntText").keyup(function(){
+                    if ($(this).val() != initVal) {
+                        $(".cmntBtn").removeAttr("disabled");
+                    } else {
+                        $(".cmntBtn").attr("disabled", "true");
+                    }
+                });
+            });
+        </script> -->
+        <style>
+            body{
+                padding: 10px;
+            }
+            #header{
+                height: 50px;
+                width: 900px;
+                padding: 10px;
+            }
+            #header p, #header a, #header button{
+                display: inline-block;
+                vertical-align: top;
+            }
+            #header p{
+                margin-right: 400px;
+            }
+            #editLink{
+                margin-right: 50px;
+            }
+            #header button a, a:hover{
+                color: black;
+                text-decoration: none;
+            }
+            #content{
+                min-height: 500px;
+                width: 900px;
+                padding: 25px 75px;
+            }
+            #leftPane{
+                display: inline-block;
+                vertical-align: top;
+            }
+            h5{
+                text-align: center;
+            }
+            .quote-box{
+                border: 2px solid black;
+                width: 350px;
+                min-height: 150px;
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+            .quote-box button a, a:hover{
+                color: black;
+                text-decoration: none;
+            }
+            form{
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 100px;
+            }
+            #quoteForm p{
+                margin-bottom: 0px;
+                margin-top: 20px;
+            }
+            textarea{
+                height: 125px;
+                width: 250px;
+                margin-bottom: 10px;
+                resize: none;
+            }
+            .messages{
+                color: red;
+                margin-top: 20px;
+                width: 250px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <p>Welcome {{request.session.user_fname}} {{request.session.user_lname}}!</p>
+            <a id="editLink" href="/edit_page">Edit My Account</a>
+            <button><a href="/logout">Logout</a></button>
+        </div>
+        <div id="content">
+            <div id="leftPane">
+                <h5>Quotes</h5>
+                {% for quote in all_quotes %}
+                <div class="quote-box">
+                    <p>{{quote.author}}: "{{quote.quote}}"</p>
+                    <p>Posted by <a href="/user/{{ quote.user.id }}">{{quote.user.first_name}} {{quote.user.last_name}}</a></p>
+                    <p>{{quote.like.count}} people like this   <button><a href="/like_quote/{{quote.id}}">Like!</a></button></p>
+                    {% if quote.user.id == request.session.user_id %}<a href="/delete/{{quote.id}}">Delete</a>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <form id="quoteForm" action="/post_quote" method="POST">
+                {% csrf_token %}
+                <h5>Add a Quote!</h5>
+                <p>Author</p>
+                <input type="text" name="post-author">
+                <p>Quote</p>
+                <textarea name="post-quote"></textarea><br>
+                <input type="submit" value="Submit">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </form>
+        </div>
+    </body>
+</html>

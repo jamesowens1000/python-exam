@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Quotes</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            body{
+                padding: 25px;
+            }
+            #header{
+                padding-left: 500px;
+            }
+            #header button{
+                margin-left: 15px;
+            }
+            #header button a, a:hover{
+                color: black;
+                text-decoration: none;
+            }
+            .quote-box{
+                border: 2px solid black;
+                width: 300px;
+                min-height: 100px;
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <a href="/quotes">Back</a>
+            <button><a href="/logout">Logout</a></button>
+        </div>
+        <div id="content">
+            <h6>{{user_fname}} {{user_lname}}'s Quotes</h6>
+            {% for quote in user_quotes %}
+                <div class="quote-box">
+                    <p>{{quote.author}}: "{{quote.quote}}"</p>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
